@@ -10,11 +10,8 @@ serial.timeout = 1
 def open_serial_connection():
     try:
         serial.open()
-        print("Serial Connection Success!")
-        return True
     except Exception as e:
         print(f"Failed to open serial port: {e}")
-        return False
 
 
 def switch_led(led_name):
