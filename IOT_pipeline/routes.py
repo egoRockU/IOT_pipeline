@@ -1,6 +1,7 @@
 from flask import Blueprint, request
 from .serial import switch_led, send_text
 import json
+from flask_cors import cross_origin
 
 from .extensions import socketio
 
@@ -11,6 +12,7 @@ def index():
     return "Hello World"
 
 @bp.route("/led", methods=['POST'])
+@cross_origin()
 def led():
     led = json.loads(request.data)
     switch_led(led['led'])
@@ -21,6 +23,7 @@ def socket_connect():
     print('Client connected')
 
 @bp.route("/text", methods=['POST'])
+@cross_origin()
 def text():
     text = json.loads(request.data)
     send_text(text['text'])

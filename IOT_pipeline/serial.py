@@ -27,7 +27,7 @@ def serial_listen():
                 water_status = data.split(': ')[1]
                 message = "water status: " + water_status
                 print(message)
-                socketio.emit('water status', message)
+                socketio.emit('water_status', message)
 
 def switch_led(led_name):
     if (serial.is_open):
