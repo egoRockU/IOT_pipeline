@@ -37,3 +37,11 @@ def switch_led(led_name):
     else:
         print('Serial is not Open.')
     
+
+def send_text(text):
+    if (serial.is_open):
+        message = 'text: ' + text + '\n'
+        serial.write(message.encode())
+        print('Text sent successfully')
+    else:
+        print('Serial is not Open')

@@ -1,5 +1,5 @@
 from flask import Blueprint, request
-from .serial import switch_led
+from .serial import switch_led, send_text
 import json
 
 from .extensions import socketio
@@ -19,3 +19,9 @@ def led():
 @socketio.on('connect')
 def socket_connect():
     print('Client connected')
+
+@bp.route("/text", methods=['POST'])
+def text():
+    text = json.loads(request.data)
+    send_text(text['text'])
+    return "OK"
