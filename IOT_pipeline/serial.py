@@ -1,5 +1,6 @@
 from serial import Serial
 from .extensions import socketio
+import json
 
 SERIAL_PORT = '/dev/ttyUSB0'
 
@@ -29,6 +30,10 @@ def serial_listen():
                 print(message)
                 socketio.emit('water_status', message)
 
+            if '\"texts\": ' in data:
+                texts = json.loads(data)
+                socketio.emit('lcd-status', texts)
+
 def switch_led(led_name):
     if (serial.is_open):
         message = 'led: ' + led_name + "\n"
@@ -43,5 +48,13 @@ def send_text(text):
         message = 'text: ' + text + '\n'
         serial.write(message.encode())
         print('Text sent successfully')
+    else:
+        print('Serial is not Open')
+
+
+def get_texts():
+    if (serial.is_open):
+        message = 'get: texts'
+        serial.write(message.encode())
     else:
         print('Serial is not Open')
